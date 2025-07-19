@@ -8,10 +8,8 @@ assignees: DevashishX
 ---
 
 # Title
----
 
 ## Description
----
 
 ## Solution
-__Please suggest a solution if you have any__
+_Please suggest a solution if you have any_
