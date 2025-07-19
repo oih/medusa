@@ -1,7 +1,6 @@
-from math import e
 import requests, requests_cache
 from datetime import datetime, timedelta
-
+import logging
 # Coordinates for Aachen, Germany
 
 session = requests_cache.CachedSession('demo_cache', expire_after=3600)  # Cache for 1 hour
@@ -59,13 +58,9 @@ def get_Weather(session):
         # print(new_data)
         data = new_data  # Use the new data structure
         for i in range(len(times)):
-            print(f"{times[i]} | Temp: {temperatures[i]}°C | Precip: {precipitation[i]}mm | Cloud: {cloudcover[i]}%")
+            logging.info(f"{times[i]} | Temp: {temperatures[i]}°C | Precip: {precipitation[i]}mm | Cloud: {cloudcover[i]}%")
     else:
-        print("Error:", response.status_code, response.text)
-        
-    
-    
-    
+        logging.error(f"Error: {response.status_code} - {response.text}")
     return data
 
 if __name__ == "__main__":
