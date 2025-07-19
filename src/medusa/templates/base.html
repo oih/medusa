@@ -3,7 +3,7 @@
     <head>
         <meta charset="UTF-8" />
         <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-        <meta http-equiv="refresh" content="10" />
+       <!-- <meta http-equiv="refresh" content="10" /> -->
         <link rel="stylesheet" href="/css/fonts.css" />
         <title>{% block title %}OIH Digital Signage{% endblock %}</title>
         <style>
@@ -73,8 +73,9 @@
 
                  .weather-grid {
                      display: grid;
-                     grid-template-columns: repeat(3, 1fr);
-                     grid-template-rows: repeat(3, 1fr);
+                     //grid-template-columns: repeat(3, 1fr);
+                     grid-template-columns: repeat(auto-fill, minmax(10rem, 1fr));
+                     grid-template-rows: repeat(auto-fit, minmax(5rem, 1fr));
                      gap: 20px;
             //         height: calc(100% - 80px);
                    //  overflow-y: auto;
@@ -158,11 +159,11 @@
                         // letter-spacing: 1px;
                      }
 
-                     .weather-grid {
+                     /* .weather-grid {
                          grid-template-columns: repeat(3, 1fr);
                          grid-template-rows: repeat(3, 1fr);
                          gap: 15px;
-                     }
+                     } */
 
                      .weather-section,
                      .content-section {
@@ -190,15 +191,17 @@
                         <div class="weather-time">
                             {{ weather_data.hourly.time[i][-5:] }}
                         </div>
-                        <div class="weather-temp">
-                            {{ weather_data.hourly.temperature_2m[i] }}°C
-                        </div>
-                        <div class="weather-details">
-                            <div>
-                                💧 {{ weather_data.hourly.precipitation[i] }}mm
+                        <div style="display:flex; gap: 1rem; flex-wrap: wrap; align-items: center; justify-content: center;"">
+                            <div class="weather-temp">
+                                {{ weather_data.hourly.temperature_2m[i] }}°C
                             </div>
-                            <div>
-                                ☁️ {{ weather_data.hourly.cloudcover[i] }}%
+                            <div class="weather-details">
+                                <div>
+                                    💧 {{ weather_data.hourly.precipitation[i] }}mm
+                                </div>
+                                <div>
+                                    ☁️ {{ weather_data.hourly.cloudcover[i] }}%
+                                </div>
                             </div>
                         </div>
                     </div>
