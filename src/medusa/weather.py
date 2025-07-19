@@ -41,11 +41,11 @@ def get_Weather(session):
         precipitation = hourly.get("precipitation", [])
         cloudcover = hourly.get("cloudcover", [])
 
-        print(data)
+        logging.debug(data)
         for i in range(len(times)):
-            print(f"{times[i]} | Temp: {temperatures[i]}°C | Precip: {precipitation[i]}mm | Cloud: {cloudcover[i]}%")
+            logging.info(f"{times[i]} | Temp: {temperatures[i]}°C | Precip: {precipitation[i]}mm | Cloud: {cloudcover[i]}%")
     else:
-        print("Error:", response.status_code, response.text)
+        logging.error(f"Error: {response.status_code} - {response.text}")
     return data
 
 if __name__ == "__main__":
