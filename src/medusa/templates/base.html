@@ -1,0 +1,202 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% block title %}OIH Digital Signage{% endblock %}</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Arial', sans-serif;
+            background: linear-gradient(135deg, #74b9ff 0%, #0984e3 100%);
+            color: white;
+            height: 100vh;
+            overflow: hidden;
+        }
+
+        .header {
+            background: rgba(0, 0, 0, 0.3);
+            padding: 20px;
+            text-align: center;
+            border-bottom: 2px solid rgba(255, 255, 255, 0.2);
+        }
+
+        .header h1 {
+            font-size: 3rem;
+            font-weight: bold;
+            letter-spacing: 3px;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
+        }
+
+        .container {
+            display: flex;
+            flex-direction: column;
+            height: calc(100vh - 100px); /* Subtract header height */
+        }
+
+        .weather-section {
+            flex: 1;
+            padding: 30px;
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(10px);
+            border-radius: 15px;
+            margin: 20px;
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+        }
+
+        .weather-section h2 {
+            font-size: 2rem;
+            margin-bottom: 20px;
+            text-align: center;
+            text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.3);
+        }
+
+        .weather-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 20px;
+            height: calc(100% - 80px);
+            overflow-y: auto;
+        }
+
+        .weather-card {
+            background: rgba(255, 255, 255, 0.15);
+            border-radius: 10px;
+            padding: 20px;
+            text-align: center;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            transition: transform 0.3s ease;
+        }
+
+        .weather-card:hover {
+            transform: translateY(-5px);
+        }
+
+        .weather-time {
+            font-size: 1.1rem;
+            font-weight: bold;
+            margin-bottom: 10px;
+            color: #ffeaa7;
+        }
+
+        .weather-temp {
+            font-size: 2rem;
+            font-weight: bold;
+            margin: 10px 0;
+            color: #fff;
+        }
+
+        .weather-details {
+            font-size: 0.9rem;
+            opacity: 0.9;
+        }
+
+        .content-section {
+            flex: 1;
+            padding: 30px;
+            background: rgba(255, 255, 255, 0.05);
+            backdrop-filter: blur(5px);
+            border-radius: 15px;
+            margin: 0 20px 20px 20px;
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .content-section h2 {
+            font-size: 2rem;
+            opacity: 0.7;
+            text-align: center;
+        }
+
+        /* Scrollbar styling */
+        .weather-grid::-webkit-scrollbar {
+            width: 8px;
+        }
+
+        .weather-grid::-webkit-scrollbar-track {
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 4px;
+        }
+
+        .weather-grid::-webkit-scrollbar-thumb {
+            background: rgba(255, 255, 255, 0.3);
+            border-radius: 4px;
+        }
+
+        .weather-grid::-webkit-scrollbar-thumb:hover {
+            background: rgba(255, 255, 255, 0.5);
+        }
+
+        /* Responsive design */
+        @media (max-width: 768px) {
+            .header h1 {
+                font-size: 2rem;
+                letter-spacing: 1px;
+            }
+            
+            .weather-grid {
+                grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+                gap: 15px;
+            }
+            
+            .weather-section, .content-section {
+                margin: 10px;
+                padding: 20px;
+            }
+        }
+    </style>
+    {% block extra_css %}{% endblock %}
+</head>
+<body>
+    <header class="header">
+        <h1>OIH</h1>
+    </header>
+
+    <div class="container">
+        <section class="weather-section">
+            <h2>Weather Forecast - Aachen</h2>
+            {% block weather_content %}
+            <div class="weather-grid">
+                {% if weather_data and weather_data.hourly %}
+                    {% for i in range(weather_data.hourly.time|length) %}
+                    <div class="weather-card">
+                        <div class="weather-time">
+                            {{ weather_data.hourly.time[i][-5:] }}
+                        </div>
+                        <div class="weather-temp">
+                            {{ weather_data.hourly.temperature_2m[i] }}°C
+                        </div>
+                        <div class="weather-details">
+                            <div>💧 {{ weather_data.hourly.precipitation[i] }}mm</div>
+                            <div>☁️ {{ weather_data.hourly.cloudcover[i] }}%</div>
+                        </div>
+                    </div>
+                    {% endfor %}
+                {% else %}
+                    <div style="grid-column: 1 / -1; text-align: center; padding: 40px;">
+                        <h3>Loading weather data...</h3>
+                    </div>
+                {% endif %}
+            </div>
+            {% endblock %}
+        </section>
+
+        <section class="content-section">
+            {% block content %}
+            <h2>Additional Content Area</h2>
+            {% endblock %}
+        </section>
+    </div>
+
+    {% block extra_js %}{% endblock %}
+</body>
+</html>
