@@ -1,19 +1,15 @@
-[project]
+[tool.poetry]
 name = "medusa"
 version = "0.1.0"
-description = ""
-authors = [
-    {name = "Your Name",email = "you@example.com"}
-]
+description = "Deigital Signage flask app for OIH Foyer"
+authors = ["Devahsish Gaiwkad <ishay.gaikwad@gmail.com>"]
 readme = "README.md"
-requires-python = ">=3.12"
-dependencies = [
-    "flask (>=3.1.1,<4.0.0)",
-    "requests (>=2.32.4,<3.0.0)"
-]
-
-[tool.poetry]
 packages = [{include = "medusa", from = "src"}]
+
+[tool.poetry.dependencies]
+python = "^3.12"
+flask = "^3.1.1"
+requests = "^2.32.4"
 
 
 [build-system]
