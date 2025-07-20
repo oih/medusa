@@ -10,6 +10,7 @@ packages = [{include = "medusa", from = "src"}]
 python = "^3.12"
 flask = "^3.1.1"
 requests = "^2.32.4"
+requests-cache = "^1.2.1"
 
 
 [build-system]
